@@ -88,7 +88,8 @@ func (f Filter) updateContainer(rn *yaml.RNode) error {
 	}
 
 	for _, img := range f.Images {
-		if image.IsImageMatched(imageValue, img.Name) {
+		name, _, _ := image.Split(imageValue)
+		if name == img.Name {
 			return rn.SetMapField(yaml.NewScalarRNode(img.NewPullPolicy), "imagePullPolicy")
 		}
 	}
